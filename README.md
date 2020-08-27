@@ -1,5 +1,13 @@
 # ImageGeneration BlenderProc
  Generating realistic RGBD images of objects (designed for YUMI platform)
+ 
+## Git Pull
+
+pull with
+
+```
+git clone --recursive https://github.com/JiangBowen0008/ImageGeneration-BlenderProc.git
+```
 
 ## Get Started
 
