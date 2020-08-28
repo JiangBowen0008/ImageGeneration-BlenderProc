@@ -9,6 +9,8 @@ pull with
 git clone --recursive https://github.com/JiangBowen0008/ImageGeneration-BlenderProc.git
 ```
 
+ ![demo](/doc/demo.png)
+
 ## Get Started
 
 
