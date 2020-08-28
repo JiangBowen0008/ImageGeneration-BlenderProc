@@ -35,9 +35,9 @@ Install any missing dependency if prompted.
 ### 3. Run Image Generation
 
 ```
-cd BlenderProc && ./generateImages.sh 10
+cd BlenderProc && sh ./generateImages.sh 1
 ```
-The command generates 10 images with randomly chosen amount (1-15) of objects. Replace 10 with custom numbers.
+The command generates 1 image with randomly chosen amount (1-15) of objects. Replace 1 with custom numbers of images to generate.
 
 To change the range of the number of spawned objects, modify **generateImages.sh**.
 
