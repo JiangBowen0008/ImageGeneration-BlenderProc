@@ -40,3 +40,11 @@ cd BlenderProc && ./generateImages.sh 10
 The command generates 10 images with randomly chosen amount (1-15) of objects. Replace 10 with custom numbers.
 
 To change the range of the number of spawned objects, modify **generateImages.sh**.
+
+## Customization
+
+### Camera Position
+Camera position is set inside **BlenderProc/ImageGenConfig/camera_positions**
+
+### Object Models
+Currently the project is using the LM-O (Linemod-Occluded) dataset (can be found on [BOP dataset](https://bop.felk.cvut.cz/datasets/)). To change the dataset, simply replace **lmo** inside **generateImages.sh** with the name of the replacement dataset.
