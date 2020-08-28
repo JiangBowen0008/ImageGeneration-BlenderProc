@@ -1,5 +1,5 @@
 # ImageGeneration BlenderProc
- Generating realistic RGBD images of objects (designed for YUMI platform) using ![BlenderProc](https://github.com/DLR-RM/BlenderProc).
+ Generating realistic RGBD images of objects (designed for YUMI platform) using [BlenderProc](https://github.com/DLR-RM/BlenderProc).
  
  ![demo](/doc/demo.png)
  
