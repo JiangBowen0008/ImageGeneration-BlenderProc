@@ -35,4 +35,4 @@ cd BlenderProc && ./generateImages.sh 10
 ```
 The command generates 10 images with randomly chosen amount (1-15) of objects.
 
-To change the range of the number of spawned objects, change the range inside **generateImages.sh**.
+To change the range of the number of spawned objects, modify **generateImages.sh**.
