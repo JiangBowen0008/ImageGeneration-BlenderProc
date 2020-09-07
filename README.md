@@ -2,7 +2,14 @@
  Generating realistic RGBD images of objects (designed for YUMI platform) using [BlenderProc](https://github.com/DLR-RM/BlenderProc). The code is modified based on [bop_object_physics_positioning](https://github.com/DLR-RM/BlenderProc/tree/master/examples/bop_object_physics_positioning). 
  
  ![demo](/doc/demo.png)
- 
+
+## Supported Platforms
+- Linux 16.04 (Tested)
+- Linux 18.04 (Tested)
+- Linux 20.04 (Tested)
+- Mac (Not Tested)
+- Windows (Not supported because BlenderProc is currently not supported on Windows. However, BOP toolkit supports direct rendering using its own renderers.)
+
 ## Git Pull
 
 pull with
@@ -16,7 +23,7 @@ git clone --recursive https://github.com/JiangBowen0008/ImageGeneration-BlenderP
 ## Get Started
 
 
-### 1. Install Prerequisite for bop_toolkit
+### 1. Prerequisite
 
 Notice: For detailed instructions, check
 
@@ -26,13 +33,18 @@ https://github.com/thodan/bop_toolkit
 pip3 install pyyaml
 pip3 install cython
 pip3 install -r bop_toolkit/requirements.txt
-sudo apt-get install freetype
-sudo apt-get install libglfw3
+sudo apt install freetype
+sudo apt install libglfw3
+```
+**Note: If freetype cannot be installed, try install it with the following command:**
+```
+sudo apt update && sudo apt install freetype2-demos
 ```
 
-Install any missing dependency if prompted.
+Install any other missing dependency if prompted.
 
-### 3. Run Image Generation
+
+### 2. Run Image Generation
 
 ```
 cd BlenderProc && sh ./generateImages.sh 1
@@ -47,4 +59,9 @@ To change the range of the number of spawned objects, modify **generateImages.sh
 Camera position is set inside **BlenderProc/ImageGenConfig/camera_positions**.
 
 ### Object Models
-Currently the project is using the LM-O (Linemod-Occluded) dataset (can be found on [BOP dataset](https://bop.felk.cvut.cz/datasets/)). To change the dataset, simply replace **lmo** inside **generateImages.sh** with the name of the replacement dataset.
+Currently the project is using the LM-O (Linemod-Occluded) dataset (can be found on [BOP dataset](https://bop.felk.cvut.cz/datasets/)). To change the dataset, simply replace **lmo** inside **generateImages.sh** with the name of the dataset to replace.
+
+### Scene
+The scene used by default is the **scene.blend** file located inside **BlenderProc/ImageGenConfig**. To customzie your own scene, replace it with your own blender file.
+
+**Notice: Concave objects need to be properly segmented before used. Physics simulations will be miscalculated otherwise.**
