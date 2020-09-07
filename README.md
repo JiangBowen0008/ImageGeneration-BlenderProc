@@ -2,7 +2,14 @@
  Generating realistic RGBD images of objects (designed for YUMI platform) using [BlenderProc](https://github.com/DLR-RM/BlenderProc). The code is modified based on [bop_object_physics_positioning](https://github.com/DLR-RM/BlenderProc/tree/master/examples/bop_object_physics_positioning). 
  
  ![demo](/doc/demo.png)
- 
+
+## Supported Platforms
+- Linux 16.04 (Tested)
+- Linux 18.04 (Tested)
+- Linux 20.04 (Tested)
+- Mac (Not Tested)
+- Windows (Not supported because BlenderProc is currently not supported on Windows. However, BOP toolkit supports direct rendering using its own renderers.)
+
 ## Git Pull
 
 pull with
