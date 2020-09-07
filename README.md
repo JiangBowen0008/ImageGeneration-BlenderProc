@@ -61,6 +61,11 @@ Camera position is set inside **BlenderProc/ImageGenConfig/camera_positions**.
 ### Object Models
 Currently the project is using the LM-O (Linemod-Occluded) dataset (can be found on [BOP dataset](https://bop.felk.cvut.cz/datasets/)). To change the dataset, simply replace **lmo** inside **generateImages.sh** with the name of the dataset to replace.
 
+### Object Scale
+By default all objects are scaled by 0.5. To use custom scale, change the value at [the corresponding value at the config.yaml file](https://github.com/JiangBowen0008/BlenderProc/blob/c87a6662e21bab60cd3f55b1f5adcf0516ce8e6b/ImageGenConfig/config.yaml#L73) together with the one at [config.py file](https://github.com/JiangBowen0008/bop_toolkit/blob/7eb6c12974ba31cd6f6a3ad2932e9205b45172d5/scripts/bop_toolkit_lib/config.py#L21).
+
+
+
 ### Scene
 The scene used by default is the **scene.blend** file located inside **BlenderProc/ImageGenConfig**. To customzie your own scene, replace it with your own blender file.
 
