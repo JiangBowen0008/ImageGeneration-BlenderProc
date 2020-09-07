@@ -1,3 +1,6 @@
 [submodule "BlenderProc"]
 	path = BlenderProc
 	url = https://github.com/JiangBowen0008/BlenderProc.git
+[submodule "bop_toolkit"]
+	path = bop_toolkit
+	url = https://github.com/JiangBowen0008/bop_toolkit.git
