@@ -30,9 +30,9 @@ Notice: For detailed instructions, check
 https://github.com/thodan/bop_toolkit
 
 ```
-pip3 install pyyaml
-pip3 install cython
-pip3 install -r bop_toolkit/requirements.txt
+pip install pyyaml
+pip install cython
+pip install -r bop_toolkit/requirements.txt
 sudo apt install freetype
 sudo apt install libglfw3
 ```
