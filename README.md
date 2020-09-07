@@ -16,7 +16,7 @@ git clone --recursive https://github.com/JiangBowen0008/ImageGeneration-BlenderP
 ## Get Started
 
 
-### 1. Install Prerequisite for bop_toolkit
+### 1. Prerequisite
 
 Notice: For detailed instructions, check
 
@@ -37,7 +37,7 @@ sudo apt update && sudo apt install freetype2-demos
 Install any other missing dependency if prompted.
 
 
-### 3. Run Image Generation
+### 2. Run Image Generation
 
 ```
 cd BlenderProc && sh ./generateImages.sh 1
