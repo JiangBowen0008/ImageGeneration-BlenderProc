@@ -92,7 +92,7 @@ def main():
                     centroid_distance_grasp = []
                     centroid_distance_suction = []
                     visible_rate_list = []
-                    mask_area_list = []
+                    reciprocal_mask_area_list = []
                     mask_visible_area_list = []
                     mask_name_list = []
 
@@ -134,7 +134,7 @@ def main():
                         visible_rate = get_visible_rate(mask_image, mask_visible_image)
 
                         # get area of mask
-                        mask_area = get_mask_area(mask_image)
+                        reciprocal_mask_area = 1.0 / get_mask_area(mask_image)
 
                         # suction score
                         # suction_score = distance to lift midpoint + visible area
@@ -143,7 +143,7 @@ def main():
                         centroid_distance_grasp.append(distance_2_right_midpoint)
                         centroid_distance_suction.append(distance_2_lift_midpoint)
                         visible_rate_list.append(visible_rate)
-                        mask_area_list.append(mask_area)
+                        reciprocal_mask_area_list.append(reciprocal_mask_area)
                         mask_visible_area_list.append(mask_visible_area)
                         mask_name_list.append(mask_name)
 
@@ -151,14 +151,16 @@ def main():
                     featureList = np.array([centroid_distance_grasp,
                                             centroid_distance_suction,
                                             visible_rate_list,
-                                            mask_area_list,
+                                            reciprocal_mask_area_list,
                                             mask_visible_area_list]).transpose()
                     print(featureList.shape)
                     norm_feat = range_normalize(featureList)
 
                     # calculating score
-                    score = np.mean(norm_feat, axis = 1).tolist()
-                    scores[scene_key]["score"] = score
+                    suction_score = np.mean(norm_feat[:, [1, 4]], axis = 1).tolist()
+                    grasp_score = np.mean(norm_feat[:, [0, 2, 3]], axis = 1).tolist()
+                    scores[scene_key]["suction_score"] = suction_score
+                    scores[scene_key]["grasp_score"] = grasp_score
                     scores[scene_key]["names"] = mask_name_list 
                 
                 # store the scores
