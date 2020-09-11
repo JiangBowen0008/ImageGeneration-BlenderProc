@@ -95,6 +95,7 @@ def main():
                     reciprocal_mask_area_list = []
                     mask_visible_area_list = []
                     mask_name_list = []
+                    centroid_x_list = []
 
                     for j, obj in enumerate(scene):
                         # get mask and depth image name
@@ -126,6 +127,8 @@ def main():
                         if visible_mask_centroid == None:
                             continue
 
+                        centroid_x = visible_mask_centroid[0]
+
                         # distance between visible mask centroid and midpoints
                         distance_2_right_midpoint = get_distance(visible_mask_centroid, right_midpoint)
                         distance_2_lift_midpoint = get_distance(visible_mask_centroid, left_midpoint)
@@ -146,6 +149,10 @@ def main():
                         reciprocal_mask_area_list.append(reciprocal_mask_area)
                         mask_visible_area_list.append(mask_visible_area)
                         mask_name_list.append(mask_name)
+                        centroid_x_list.append(centroid_x)
+
+                    # converting mask names to numpy array for later processing
+                    mask_name_list = np.array(mask_name_list)
 
                     # normalize
                     featureList = np.array([centroid_distance_grasp,
@@ -157,11 +164,34 @@ def main():
                     norm_feat = range_normalize(featureList)
 
                     # calculating score
-                    suction_score = np.mean(norm_feat[:, [1, 4]], axis = 1).tolist()
-                    grasp_score = np.mean(norm_feat[:, [0, 2, 3]], axis = 1).tolist()
-                    scores[scene_key]["suction_score"] = suction_score
-                    scores[scene_key]["grasp_score"] = grasp_score
-                    scores[scene_key]["names"] = mask_name_list 
+                    suction_score = np.mean(norm_feat[:, [1, 4]], axis = 1)
+                    grasp_score = np.mean(norm_feat[:, [0, 2, 3]], axis = 1)
+                    suction_name = mask_name_list
+                    grasp_name = mask_name_list
+
+                    # seperating left and right objects
+                    centroid_x_list = np.array(centroid_x_list)
+                    x_mid = centroid_x_list.mean()
+                    mask = centroid_x_list <= x_mid
+                    suction_name = suction_name[mask]
+                    suction_score = suction_score[mask]
+                    grasp_name = grasp_name[~mask]
+                    grasp_score = grasp_score[~mask]
+
+                    # ranking suction
+                    idx = np.array(np.argsort(-suction_score))
+                    ranked_suction_score = suction_score[idx]
+                    ranked_suction_name = suction_name[idx]
+
+                    # ranking grasping
+                    idx = np.array(np.argsort(-grasp_score))
+                    ranked_grasp_score = grasp_score[idx]
+                    ranked_grasp_name = grasp_name[idx]
+
+                    scores[scene_key]["suction_score"] = ranked_suction_score.tolist()
+                    scores[scene_key]["suction_name"] = ranked_suction_name.tolist()
+                    scores[scene_key]["grasp_score"] = ranked_grasp_score.tolist()
+                    scores[scene_key]["grasp_name"] = ranked_grasp_name.tolist()
                 
                 # store the scores
                 scores_path = os.path.join(data_dir, sub_file, 'scene_score.json')
