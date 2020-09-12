@@ -167,32 +167,46 @@ def main():
                     # calculating score
                     suction_score = np.mean(norm_feat[:, [1, 4]], axis = 1)
                     grasp_score = np.mean(norm_feat[:, [0, 2, 3]], axis = 1)
-                    suction_name = mask_name_list
-                    grasp_name = mask_name_list
 
-                    # seperating left and right objects
-                    centroid_x_list = np.array(centroid_x_list)
-                    x_mid = centroid_x_list.mean()
-                    mask = centroid_x_list <= x_mid
-                    suction_name = suction_name[mask]
-                    suction_score = suction_score[mask]
-                    grasp_name = grasp_name[~mask]
-                    grasp_score = grasp_score[~mask]
+                    
+                    # pair-wise analysis
+                    # i points to the left object (suction)
+                    # j points to the right object (grasp)
+                    suction_name_idx = []
+                    grasp_name_idx = []
+                    num_obj = mask_name_list.shape[0]
+                    for i in range(num_obj):
+                        for j in range(num_obj):
 
-                    # ranking suction
-                    idx = np.array(np.argsort(-suction_score))
-                    ranked_suction_score = suction_score[idx]
+                            # skip when two objects are the same
+                            if i == j:
+                                continue
+
+                            # skip for overlapping arms
+                            if centroid_x_list[j] - centroid_x_list[i] < threshold:
+                                continue
+
+                            # calculating the combination score
+                            suction_name_idx.append(i)
+                            grasp_name_idx.append(j)
+
+                    # calculating scores
+                    comb_suction_score = suction_score[suction_name_idx]
+                    comb_grasp_score = grasp_score[grasp_name_idx]
+                    comb_score = comb_suction_score + comb_grasp_score
+                    idx = np.array(np.argsort(-comb_score))
+                    ranked_comb_score = comb_score[idx]
+
+                    # getting corresponding ranked names
+                    suction_name = mask_name_list[suction_name_idx]
+                    grasp_name = mask_name_list[grasp_name_idx]
                     ranked_suction_name = suction_name[idx]
-
-                    # ranking grasping
-                    idx = np.array(np.argsort(-grasp_score))
-                    ranked_grasp_score = grasp_score[idx]
                     ranked_grasp_name = grasp_name[idx]
+                    ranked_comb_names = list(zip(ranked_suction_name, ranked_grasp_name))
 
-                    scores[scene_key]["suction_score"] = ranked_suction_score.tolist()
-                    scores[scene_key]["suction_name"] = ranked_suction_name.tolist()
-                    scores[scene_key]["grasp_score"] = ranked_grasp_score.tolist()
-                    scores[scene_key]["grasp_name"] = ranked_grasp_name.tolist()
+                    # storing inside the scene dictionary
+                    scores[scene_key]["comb_score"] = ranked_comb_score.tolist()
+                    scores[scene_key]["comb_names"] = ranked_comb_names
                 
                 # store the scores
                 scores_path = os.path.join(data_dir, sub_file, 'scene_score.json')
