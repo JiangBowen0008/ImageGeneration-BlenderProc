@@ -58,10 +58,10 @@ def get_distance(target, mid_point):
 
 def range_normalize(list):
     list = np.array(list)
-    min_data = np.min(list, axis = 1)
-    max_data = np.max(list, axis = 1)
+    min_data = np.min(list, axis = 0)
+    max_data = np.max(list, axis = 0)
     data_range = (max_data - min_data)
-    norm_data = (list - min_data[:, None]) / data_range[:, None]
+    norm_data = (list - min_data[None, :]) / data_range[None, :]
     return norm_data
 
 def std_normalize(list):
@@ -107,8 +107,8 @@ def main():
 
                         # grasp score
                         # grasp_score = distance to right midpoint + visible rate/mask area
-                        right_midpoint = [215, 520]
-                        left_midpoint = [200, 20]
+                        right_midpoint = [520, 215]
+                        left_midpoint = [20, 200]
 
                         # load mask
                         mask_path = os.path.join(data_dir, sub_file, 'mask', mask_name)

@@ -58,8 +58,8 @@ def get_distance(target, mid_point):
 
 def range_normalize(list):
     list = np.array(list)
-    min_data = np.min(list, axis = 1)
-    max_data = np.max(list, axis = 1)
+    min_data = np.min(list, axis = 0)
+    max_data = np.max(list, axis = 0)
     data_range = (max_data - min_data)
     norm_data = (list - min_data[:, None]) / data_range[:, None]
     return norm_data
